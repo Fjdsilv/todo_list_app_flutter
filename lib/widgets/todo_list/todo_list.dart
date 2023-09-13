@@ -32,7 +32,7 @@ class _TodoListState extends State<TodoList> {
     });
   }
 
-  Future<void> _displayDialog() async {
+  void _showModalDialog() {
     showDialog(
         context: context,
         builder: (cxt) {
@@ -72,7 +72,7 @@ class _TodoListState extends State<TodoList> {
         title: const Text("Todo App"),
         actions: [
           IconButton(
-            onPressed: _displayDialog,
+            onPressed: _showModalDialog,
             tooltip: "Add a Todo",
             icon: const Icon(Icons.add),
           )

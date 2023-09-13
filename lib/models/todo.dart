@@ -4,6 +4,6 @@ class Todo {
     required this.completed,
   });
 
-  String name;
+  final String name;
   bool completed;
 }
