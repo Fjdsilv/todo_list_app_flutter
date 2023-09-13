@@ -26,13 +26,36 @@ class _TodoListState extends State<TodoList> {
     });
   }
 
-  void _deleteTodo(Todo todo) {
-    setState(() {
-      _todos.removeWhere((element) => element.name == todo.name);
-    });
+  void _showDeleteModal(Todo todo) {
+    showDialog(
+      context: context,
+      builder: (ctx) {
+        return AlertDialog(
+          title: const Text('Delete Item'),
+          content: const Text('Are you sure you want to delete this item?'),
+          actions: [
+            OutlinedButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+              },
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  _todos.removeWhere((element) => element.name == todo.name);
+                });
+                Navigator.pop(ctx);
+              },
+              child: const Text('Ok'),
+            )
+          ],
+        );
+      },
+    );
   }
 
-  void _showModalDialog() {
+  void _showAddModal() {
     showDialog(
         context: context,
         builder: (cxt) {
@@ -47,12 +70,13 @@ class _TodoListState extends State<TodoList> {
               OutlinedButton(
                 onPressed: () {
                   Navigator.pop(context);
+                  _textFieldController.clear();
                 },
                 child: const Text("Cancel"),
               ),
               ElevatedButton(
                 onPressed: () {
-                  if(_textFieldController.text == "") {
+                  if (_textFieldController.text == "") {
                     return;
                   }
                   _addTodoItem(_textFieldController.text);
@@ -72,7 +96,7 @@ class _TodoListState extends State<TodoList> {
         title: const Text("Todo App"),
         actions: [
           IconButton(
-            onPressed: _showModalDialog,
+            onPressed: _showAddModal,
             tooltip: "Add a Todo",
             icon: const Icon(Icons.add),
           )
@@ -84,7 +108,7 @@ class _TodoListState extends State<TodoList> {
           return TodoItem(
             todo: todo,
             onTodoChanged: _handleTodoChange,
-            removeTodo: _deleteTodo,
+            removeTodo: _showDeleteModal,
           );
         }).toList(),
       ),
