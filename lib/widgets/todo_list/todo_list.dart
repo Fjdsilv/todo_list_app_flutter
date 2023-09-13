@@ -58,7 +58,7 @@ class _TodoListState extends State<TodoList> {
   void _showAddModal() {
     showDialog(
         context: context,
-        builder: (cxt) {
+        builder: (ctx) {
           return AlertDialog(
             title: const Text('Add a Todo'),
             content: TextField(
@@ -69,7 +69,7 @@ class _TodoListState extends State<TodoList> {
             actions: [
               OutlinedButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.pop(ctx);
                   _textFieldController.clear();
                 },
                 child: const Text("Cancel"),
@@ -79,8 +79,8 @@ class _TodoListState extends State<TodoList> {
                   if (_textFieldController.text == "") {
                     return;
                   }
+                  Navigator.pop(ctx);
                   _addTodoItem(_textFieldController.text);
-                  Navigator.pop(context);
                 },
                 child: const Text("Add"),
               ),
